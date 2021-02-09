@@ -4,11 +4,6 @@ from celery import Celery # pylint: disable=import-error
 from peanutbutter.contact import contact
 
 
-CELERY_TASK_LIST = [
-    'peanutbutter.contact.tasks',
-]
-
-
 def create_celery_app(app=None):
     """
     Create a new Celery object and tie together the Celery config to the app's
@@ -18,6 +13,10 @@ def create_celery_app(app=None):
     :return: Celery app
     """
     app = app or create_app()
+
+    CELERY_TASK_LIST = [
+        'peanutbutter.contact.tasks',
+    ]
 
     celery = Celery(app.import_name, broker=app.config['CELERY_BROKER_URL'],
                     include=CELERY_TASK_LIST)
